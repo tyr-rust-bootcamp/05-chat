@@ -1,12 +1,12 @@
--- this file is used for postgresql database initialization
+-- Add migration script here
 -- create user table
 CREATE TABLE IF NOT EXISTS users(
   id bigserial PRIMARY KEY,
   fullname varchar(64) NOT NULL,
   email varchar(64) NOT NULL,
-  -- hashed argon2 password
-  password VARCHAR(64) NOT NULL,
-  created_at timestamp DEFAULT CURRENT_TIMESTAMP
+  -- hashed argon2 password, length 97
+  password_hash varchar(97) NOT NULL,
+  created_at timestamptz DEFAULT CURRENT_TIMESTAMP
 );
 
 -- create index for users for email
@@ -27,23 +27,21 @@ CREATE TABLE IF NOT EXISTS chats(
   type chat_type NOT NULL,
   -- user id list
   members bigint[] NOT NULL,
-  created_at timestamp DEFAULT CURRENT_TIMESTAMP
+  created_at timestamptz DEFAULT CURRENT_TIMESTAMP
 );
 
 -- create message table
 CREATE TABLE IF NOT EXISTS messages(
   id bigserial PRIMARY KEY,
-  chat_id bigint NOT NULL,
-  sender_id bigint NOT NULL,
+  chat_id bigint NOT NULL REFERENCES chats(id),
+  sender_id bigint NOT NULL REFERENCES users(id),
   content text NOT NULL,
   images text[],
-  created_at timestamp DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (chat_id) REFERENCES chats(id),
-  FOREIGN KEY (sender_id) REFERENCES users(id),
+  created_at timestamptz DEFAULT CURRENT_TIMESTAMP
 );
 
 -- create index for messages for chat_id and created_at order by created_at desc
 CREATE INDEX IF NOT EXISTS chat_id_created_at_index ON messages(chat_id, created_at DESC);
 
 -- create index for messages for sender_id
-CREATE INDEX IF NOT EXISTS sender_id_index ON messages(sender_id);
+CREATE INDEX IF NOT EXISTS sender_id_index ON messages(sender_id, created_at DESC);

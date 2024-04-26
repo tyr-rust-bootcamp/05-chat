@@ -1,8 +1,13 @@
 mod config;
+mod error;
 mod handlers;
+mod models;
 
 use handlers::*;
 use std::{ops::Deref, sync::Arc};
+
+pub use error::AppError;
+pub use models::User;
 
 use axum::{
     routing::{get, patch, post},
