@@ -2219,9 +2219,9 @@ dependencies = [
 
 [[package]]
 name = "sqlx-db-tester"
-version = "0.4.0"
+version = "0.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0fd0bcd99385acf65bd76b552170d04f6474716d9ebd226d143cca3b6acd6f40"
+checksum = "18ec4c9e9c434dceec904013de09c070921bab90c76ff1551cd73663836793bc"
 dependencies = [
  "anyhow",
  "csv",
