@@ -4,8 +4,9 @@ POST http://localhost:6688/api/signup
 Content-Type: application/json
 
 {
-    "fullname": "Alice Chen",
-    "email": "alice@acme.org",
+    "workspace": "acme",
+    "fullname": "Tyr Chen",
+    "email": "tchen@acme.org",
     "password": "123456"
 }
 
@@ -37,4 +38,9 @@ Content-Type: application/json
 
 
 GET http://localhost:6688/api/chat
+Authorization: Bearer {{token}}
+
+### get user list
+
+GET http://localhost:6688/api/users
 Authorization: Bearer {{token}}

@@ -49,7 +49,7 @@ mod tests {
     async fn signup_should_work() -> Result<()> {
         let config = AppConfig::load()?;
         let (_tdb, state) = AppState::new_for_test(config).await?;
-        let input = CreateUser::new("Tyr Chen", "tchen@acme.org", "Hunter42");
+        let input = CreateUser::new("none", "Tyr Chen", "tchen@acme.org", "Hunter42");
         let ret = signup_handler(State(state), Json(input))
             .await?
             .into_response();
@@ -64,7 +64,7 @@ mod tests {
     async fn signup_duplicate_user_should_409() -> Result<()> {
         let config = AppConfig::load()?;
         let (_tdb, state) = AppState::new_for_test(config).await?;
-        let input = CreateUser::new("Tyr Chen", "tchen@acme.org", "Hunter42");
+        let input = CreateUser::new("none", "Tyr Chen", "tchen@acme.org", "Hunter42");
         signup_handler(State(state.clone()), Json(input.clone())).await?;
         let ret = signup_handler(State(state.clone()), Json(input.clone()))
             .await
@@ -84,7 +84,7 @@ mod tests {
         let name = "Alice";
         let email = "alice@acme.org";
         let password = "Hunter42";
-        let user = CreateUser::new(name, email, password);
+        let user = CreateUser::new("none", name, email, password);
         User::create(&user, &state.pool).await?;
         let input = SigninUser::new(email, password);
         let ret = signin_handler(State(state), Json(input))
