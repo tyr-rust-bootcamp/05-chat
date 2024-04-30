@@ -23,7 +23,7 @@ CREATE TYPE chat_type AS ENUM(
 -- create chat table
 CREATE TABLE IF NOT EXISTS chats(
   id bigserial PRIMARY KEY,
-  name varchar(128) NOT NULL UNIQUE,
+  name varchar(64),
   type chat_type NOT NULL,
   -- user id list
   members bigint[] NOT NULL,
