@@ -132,7 +132,7 @@ mod test_util {
     pub async fn get_test_pool(url: Option<&str>) -> (TestPg, PgPool) {
         let url = match url {
             Some(url) => url.to_string(),
-            None => "postgres://postgres:123456@localhost:5432".to_string(),
+            None => "postgres://postgres:postgres@localhost:5432".to_string(),
         };
         let tdb = TestPg::new(url, std::path::Path::new("../migrations"));
         let pool = tdb.get_pool().await;
