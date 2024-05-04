@@ -1,4 +1,9 @@
 [default.extend-words]
 
 [files]
-extend-exclude = ["CHANGELOG.md", "chat_server/fixtures/*"]
+extend-exclude = [
+  "CHANGELOG.md",
+  "chat_server/fixtures/*",
+  "chat_core/fixtures/*",
+  "notify_server/*.html",
+]
