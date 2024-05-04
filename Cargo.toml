@@ -1,5 +1,5 @@
 [workspace]
-members = ["chat_server", "chat_core", "notify_server"]
+members = ["chat_server", "chat_core", "notify_server", "chat_test"]
 resolver = "2"
 
 [workspace.dependencies]
@@ -14,7 +14,9 @@ axum = { version = "0.7.5", features = [
 axum-extra = { version = "0.9.3", features = ["typed-header"] }
 chrono = { version = "0.4.38", features = ["serde"] }
 chat-core = { path = "./chat_core" }
+chat-server = { path = "./chat_server" }
 jwt-simple = "0.12.9"
+notify-server = { path = "./notify_server" }
 serde = { version = "1.0.198", features = ["derive"] }
 serde_yaml = "0.9.34"
 sqlx = { version = "0.7.4", features = [
