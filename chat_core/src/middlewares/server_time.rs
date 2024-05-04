@@ -1,11 +1,10 @@
+use super::{REQUEST_ID_HEADER, SERVER_TIME_HEADER};
+use axum::{extract::Request, response::Response};
 use std::{
     future::Future,
     pin::Pin,
     task::{Context, Poll},
 };
-
-use super::{REQUEST_ID_HEADER, SERVER_TIME_HEADER};
-use axum::{extract::Request, response::Response};
 use tokio::time::Instant;
 use tower::{Layer, Service};
 use tracing::warn;
