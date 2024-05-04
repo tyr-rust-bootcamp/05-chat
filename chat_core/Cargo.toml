@@ -14,5 +14,6 @@ sqlx = { workspace = true }
 tokio = { workspace = true }
 tower = { workspace = true }
 tower-http = { workspace = true }
-tracing.workspace = true
+tracing = { workspace = true }
+utoipa = { version = "4.2.0", features = ["axum_extras", "chrono"] }
 uuid = { version = "1.8.0", features = ["v7", "serde"] }

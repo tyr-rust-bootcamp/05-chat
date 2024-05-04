@@ -30,6 +30,10 @@ tower = { workspace = true }
 tower-http = { workspace = true }
 tracing = { workspace = true }
 tracing-subscriber = { workspace = true }
+utoipa = { version = "4.2.0", features = ["axum_extras", "chrono"] }
+utoipa-swagger-ui = { version = "6.0.0", features = ["axum"] }
+utoipa-redoc = { version = "3.0.0", features = ["axum"] }
+utoipa-rapidoc = { version = "3.0.0", features = ["axum"] }
 
 [dev-dependencies]
 chat-server = { workspace = true, features = ["test-util"] }

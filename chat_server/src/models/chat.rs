@@ -1,8 +1,9 @@
 use crate::{AppError, AppState};
 use chat_core::{Chat, ChatType};
 use serde::{Deserialize, Serialize};
+use utoipa::ToSchema;
 
-#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, ToSchema, Serialize, Deserialize)]
 pub struct CreateChat {
     pub name: Option<String>,
     pub members: Vec<i64>,
