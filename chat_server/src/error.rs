@@ -36,8 +36,8 @@ pub enum AppError {
     #[error("password hash error: {0}")]
     PasswordHashError(#[from] argon2::password_hash::Error),
 
-    #[error("jwt error: {0}")]
-    JwtError(#[from] jwt_simple::Error),
+    #[error("general error: {0}")]
+    AnyError(#[from] anyhow::Error),
 
     #[error("http header parse error: {0}")]
     HttpHeaderError(#[from] axum::http::header::InvalidHeaderValue),
@@ -56,7 +56,7 @@ impl IntoResponse for AppError {
         let status = match &self {
             Self::SqlxError(_) => StatusCode::INTERNAL_SERVER_ERROR,
             Self::PasswordHashError(_) => StatusCode::UNPROCESSABLE_ENTITY,
-            Self::JwtError(_) => StatusCode::FORBIDDEN,
+            Self::AnyError(_) => StatusCode::INTERNAL_SERVER_ERROR,
             Self::HttpHeaderError(_) => StatusCode::UNPROCESSABLE_ENTITY,
             Self::EmailAlreadyExists(_) => StatusCode::CONFLICT,
             Self::CreateChatError(_) => StatusCode::BAD_REQUEST,
