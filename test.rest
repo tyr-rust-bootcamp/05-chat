@@ -51,7 +51,17 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-    "name": "acme",
+    "name": "project X",
+    "members": [1, 2],
+    "public": false
+}
+
+### create direct chat
+POST http://localhost:6688/api/chats
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
     "members": [1, 2],
     "public": false
 }
