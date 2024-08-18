@@ -7,6 +7,7 @@ use axum::{
 };
 use chat_core::User;
 
+/// List all chats in the workspace of the user.
 #[utoipa::path(
     get,
     path = "/api/chats",
@@ -25,6 +26,7 @@ pub(crate) async fn list_chat_handler(
     Ok((StatusCode::OK, Json(chat)))
 }
 
+/// Create a new chat in the workspace of the user.
 #[utoipa::path(
     post,
     path = "/api/chats",
@@ -46,6 +48,7 @@ pub(crate) async fn create_chat_handler(
     Ok((StatusCode::CREATED, Json(chat)))
 }
 
+/// Get the chat info by id.
 #[utoipa::path(
     get,
     path = "/api/chats/{id}",

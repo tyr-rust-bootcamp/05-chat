@@ -10,6 +10,21 @@ use tracing::{info, warn};
 use crate::{AppError, AppState, ChatFile, CreateMessage, ListMessages};
 use chat_core::User;
 
+/// Send a new message in the chat.
+#[utoipa::path(
+    post,
+    path = "/api/chats/{id}",
+    params(
+        ("id" = u64, Path, description = "Chat id")
+    ),
+    responses(
+        (status = 200, description = "List of messages", body = Message),
+        (status = 400, description = "Invalid input", body = ErrorOutput),
+    ),
+    security(
+        ("token" = [])
+    )
+)]
 pub(crate) async fn send_message_handler(
     Extension(user): Extension<User>,
     State(state): State<AppState>,
@@ -21,6 +36,7 @@ pub(crate) async fn send_message_handler(
     Ok((StatusCode::CREATED, Json(msg)))
 }
 
+/// List all messages in the chat.
 #[utoipa::path(
     get,
     path = "/api/chats/{id}/messages",
