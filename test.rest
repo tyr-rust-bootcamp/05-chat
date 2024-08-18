@@ -22,17 +22,29 @@ Content-Type: application/json
     "password": "123456"
 }
 
-### signin user (valid)
+### signup user
+
+POST http://localhost:6688/api/signup
+Content-Type: application/json
+
+{
+    "workspace": "acme",
+    "fullname": "Bob Hua",
+    "email": "bob@acme.org",
+    "password": "123456"
+}
+
+### signin user (invalid)
 
 POST http://localhost:6688/api/signin
 Content-Type: application/json
 
 {
     "email": "tchen@acme.org",
-    "password": "123456"
+    "password": "a123456"
 }
 
-### signin user (invalid)
+### signin user (valid)
 
 # @name signin
 POST http://localhost:6688/api/signin
@@ -44,6 +56,19 @@ Content-Type: application/json
 }
 
 @token = {{signin.response.body.token}}
+
+### signin user (valid)
+
+# @name signin1
+POST http://localhost:6688/api/signin
+Content-Type: application/json
+
+{
+    "email": "bob@acme.org",
+    "password": "123456"
+}
+
+@token1 = {{signin1.response.body.token}}
 
 ### create chat
 POST http://localhost:6688/api/chats
@@ -63,6 +88,27 @@ Authorization: Bearer {{token}}
 
 {
     "members": [1, 2],
+    "public": false
+}
+
+### create chats without me
+POST http://localhost:6688/api/chats
+Content-Type: application/json
+Authorization: Bearer {{token1}}
+
+{
+    "name": "project Y",
+    "members": [2, 3],
+    "public": false
+}
+
+### create direct chat without me
+POST http://localhost:6688/api/chats
+Content-Type: application/json
+Authorization: Bearer {{token1}}
+
+{
+    "members": [2, 3],
     "public": false
 }
 
