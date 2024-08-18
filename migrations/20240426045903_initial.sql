@@ -48,7 +48,8 @@ CREATE TABLE IF NOT EXISTS chats(
   type chat_type NOT NULL,
   -- user id list
   members bigint[] NOT NULL,
-  created_at timestamptz DEFAULT CURRENT_TIMESTAMP
+  created_at timestamptz DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE (ws_id, name, members)
 );
 
 -- create message table
@@ -66,3 +67,6 @@ CREATE INDEX IF NOT EXISTS chat_id_created_at_index ON messages(chat_id, created
 
 -- create index for messages for sender_id
 CREATE INDEX IF NOT EXISTS sender_id_index ON messages(sender_id, created_at DESC);
+
+-- create index for chat members
+CREATE INDEX IF NOT EXISTS chat_members_index ON chats USING GIN(members);
