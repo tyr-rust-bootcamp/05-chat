@@ -4,6 +4,7 @@ mod notif;
 mod sse;
 
 use axum::{
+    http::Method,
     middleware::from_fn_with_state,
     response::{Html, IntoResponse},
     routing::get,
@@ -17,6 +18,7 @@ use dashmap::DashMap;
 use sse::sse_handler;
 use std::{ops::Deref, sync::Arc};
 use tokio::sync::broadcast;
+use tower_http::cors::{self, CorsLayer};
 
 pub use config::AppConfig;
 pub use error::AppError;
@@ -38,9 +40,23 @@ const INDEX_HTML: &str = include_str!("../index.html");
 pub async fn get_router(config: AppConfig) -> anyhow::Result<Router> {
     let state = AppState::new(config);
     notif::setup_pg_listener(state.clone()).await?;
+
+    let cors = CorsLayer::new()
+        // allow `GET` and `POST` when accessing the resource
+        .allow_methods([
+            Method::GET,
+            Method::POST,
+            Method::PATCH,
+            Method::DELETE,
+            Method::PUT,
+        ])
+        .allow_origin(cors::Any)
+        .allow_headers(cors::Any);
+
     let app = Router::new()
         .route("/events", get(sse_handler))
         .layer(from_fn_with_state(state.clone(), verify_token::<AppState>))
+        .layer(cors)
         .route("/", get(index_handler))
         .with_state(state);
 
